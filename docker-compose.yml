@@ -1,0 +1,66 @@
+version: '3.8'
+
+x-common-variables:
+  &common-variables
+  POSTGRES_DATABASE: postgres_db
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+services:
+  postgres_db:
+    image: postgres:14.1-alpine
+    restart: always
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - "../setup.sql:/docker-entrypoint-initdb.d/setup.sql"
+    ports:
+      - "9906:5432"
+    environment:
+      <<: *common-variables
+      POSTGRES_USER: postgres
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ../nginx
+    ports:
+      - "3050:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: "./"
+    depends_on:
+      - postgres_db
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    environment:
+      <<: *common-variables
+      POSTGRES_HOST_IP: postgres_db
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ../client
+    volumes:
+      - /app/node_modules
+      - ../client:/app
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - 8000:8080
+    depends_on:
+      - postgres_db
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres_db
