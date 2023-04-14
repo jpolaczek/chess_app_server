@@ -2,8 +2,7 @@ version: '3.8'
 
 x-common-variables:
   &common-variables
-  POSTGRES_DATABASE: postgres_db
-  POSTGRES_USER: postgres
+  POSTGRES_USER: express_server
   POSTGRES_PASSWORD: postgres
 
 services:
@@ -13,12 +12,11 @@ services:
     cap_add:
       - SYS_NICE
     volumes:
-      - "../setup.sql:/docker-entrypoint-initdb.d/setup.sql"
+      - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
     ports:
       - "9906:5432"
     environment:
       <<: *common-variables
-      POSTGRES_USER: postgres
 
   nginx:
     depends_on:
