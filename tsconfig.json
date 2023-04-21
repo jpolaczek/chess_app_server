@@ -1,6 +1,6 @@
 {
   "ts-node": {
-    "esm": true,
+    "esm": false,
     "experimentalSpecifierResolution": "node"
   },
   "compilerOptions": {

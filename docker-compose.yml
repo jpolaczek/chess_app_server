@@ -2,7 +2,7 @@ version: '3.8'
 
 x-common-variables:
   &common-variables
-  POSTGRES_USER: express_server
+  POSTGRES_USER: express_server_chess
   POSTGRES_PASSWORD: postgres
 
 services:
@@ -48,10 +48,10 @@ services:
       - CHOKIDAR_USEPOLLING=true
     build:
       dockerfile: Dockerfile
-      context: ../client
+      context: ../chess_client
     volumes:
       - /app/node_modules
-      - ../client:/app
+      - ../chess_client:/app
 
   adminer:
     image: adminer:latest

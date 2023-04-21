@@ -1,12 +1,13 @@
 {
-  "name": "server",
+  "name": "chess_server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "npx nodemon",
-    "start": "ts-node src/index.ts"
+    "start:dev": "npx prisma generate && npx nodemon",
+    "start": "ts-node src/index.ts",
+    "db:prisma": "ts-node --transpile-only prisma/tasks/prisma-cli.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +15,17 @@
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.11",
+    "@types/react-router-dom": "^5.3.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "i": "^0.3.7",
     "nodemon": "^2.0.22",
+    "npm": "^9.6.5",
     "prisma": "^4.12.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "zod": "^3.21.4",
+    "zod-express": "^0.0.8"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
