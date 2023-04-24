@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 declare module 'express-session' {
  interface Session {
-    userId: string;
+    userId: string | null;
   }
 }
 

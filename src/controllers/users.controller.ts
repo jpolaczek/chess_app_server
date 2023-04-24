@@ -34,6 +34,15 @@ export async function signIn(req: Request<AuthRequest>, res: Response<SessionObj
     });
 }
 
+export async function signOut(req: Request, res: Response<SessionObject>): Promise<Response> {
+    req.session.userId = null
+
+    return res.json({
+        signed_in: false,
+        username: ''
+    });
+}
+
 export async function getSessionData(req: Request, res: Response<SessionObject>): Promise<Response> {
     let result: boolean;
     const id = Number(req.session.userId)
