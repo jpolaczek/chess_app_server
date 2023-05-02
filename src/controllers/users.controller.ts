@@ -10,7 +10,7 @@ export async function signUp(req: Request<AuthRequest>, res: Response<MyResponse
     const user = await createUser({name, password}); ///prisma used here
 
     return res.json({
-        attributes: user,
+        object: user,
         dataType: 'users' 
     });
 }
@@ -24,13 +24,14 @@ export async function signIn(req: Request<AuthRequest>, res: Response<SessionObj
     if(!user) {
         result = false
     } else {
-        req.session.userId = String(user.id)
+        req.session.userId = user.id
         result = true
     }
 
     return res.json({
         signed_in: result,
-        username: name
+        username: name,
+        userId: user?.id
     });
 }
 
@@ -39,7 +40,8 @@ export async function signOut(req: Request, res: Response<SessionObject>): Promi
 
     return res.json({
         signed_in: false,
-        username: ''
+        username: '',
+        userId: undefined
     });
 }
 
@@ -57,7 +59,8 @@ export async function getSessionData(req: Request, res: Response<SessionObject>)
 
     return res.json({
         signed_in: result,
-        username: user?.name
+        username: user?.name,
+        userId: user?.id
     });
 }
 

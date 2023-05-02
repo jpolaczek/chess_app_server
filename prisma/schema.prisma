@@ -16,3 +16,10 @@ model User {
   name  String  @map("name")
   password String @map("password")
 }
+
+model Game {
+  id       Int  @id @default(autoincrement())
+  playerOneId Int
+  playerTwoId Int?
+  name  String  @map("name")
+}
