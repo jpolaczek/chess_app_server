@@ -23,3 +23,12 @@ model Game {
   playerTwoId Int?
   name  String  @map("name")
 }
+
+model Piece {
+  id      Int  @id @default(autoincrement())
+  x       Int
+  y       Int
+  type    Int
+  colour  Boolean
+  gameId  Int
+}
