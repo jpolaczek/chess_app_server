@@ -1,5 +1,3 @@
-Template for typescript express.js api configured with react.js frontend
-
 Instructions:
 
 1. pull frontend repo to the same catalog as this one(https://github.com/jpolaczek/react-typescript-template)
