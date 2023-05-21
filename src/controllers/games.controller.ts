@@ -2,6 +2,7 @@ import { Game } from '.prisma/client'
 import { Request, Response } from "express";
 import { MyResponse, GameRequest } from '../api-response'
 import { createGame, listJoinableGames, listUsersGames } from '../repositories/games.repository';
+import setBoard from '../services/setBoard';
 
 export async function create(req: Request<GameRequest>, res: Response<MyResponse<Game>>): Promise<Response> {
     const playerOneId: number | null = req.session.userId;
@@ -12,7 +13,8 @@ export async function create(req: Request<GameRequest>, res: Response<MyResponse
     }
     
     const game = await createGame({playerOneId, name});
-
+    await setBoard(game.id)
+    
     return res.json({
         object: game,
         dataType: 'games' 

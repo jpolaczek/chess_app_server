@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { usersRouter } from "./users.routes";
 import { gamesRouter } from "./games.routes";
+import { piecesRouter } from "./pieces.routes";
 
 export const router = Router();
 
@@ -12,6 +13,10 @@ const appRoutes = [
   {
     path: "/games/",
     router: gamesRouter,
+  },
+  {
+    path: "/",
+    router: piecesRouter
   }
 ];
 

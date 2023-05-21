@@ -1,4 +1,5 @@
 import { Piece } from ".prisma/client"
+import Pieces from "../enums/pieces"
 
 export type PresentedPieces = {
     [y: number]: PresentedRow
@@ -17,7 +18,10 @@ const piecesPresenter = (pieces: Piece[]): PresentedPieces => {
     let presentedPieces: PresentedPieces = {}
 
     for(var piece of pieces) {
-        presentedPieces[piece.x][piece.y] = { pieceType: piece.type, colour: piece.colour }
+        if(!presentedPieces[piece.y]) {
+            presentedPieces[piece.y] = {} as PresentedRow
+        }
+        presentedPieces[piece.y][piece.x] = { pieceType: piece.type, colour: piece.colour } as PresentedPiece
     }
     return presentedPieces
 }

@@ -3,8 +3,4 @@ import { index } from "../controllers/pieces.controller";
 
 export const piecesRouter = Router();
 
-piecesRouter.get("/", index);
-
-
-
-
+piecesRouter.get("/games/:gameId/pieces", index);
