@@ -11,10 +11,18 @@ services:
     restart: always
     cap_add:
       - SYS_NICE
-    volumes:
-      - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
     ports:
       - "9906:5432"
+    environment:
+      <<: *common-variables
+
+  postgres_db_test:
+    image: postgres:14.1-alpine
+    restart: always
+    cap_add:
+      - SYS_NICE
+    ports:
+      - "9907:5432"
     environment:
       <<: *common-variables
 
