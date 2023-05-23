@@ -48,6 +48,95 @@ describe("new user registering and signing in", () => {
             },
             dataType: 'users'
         })
+    });
+
+    it('should return bad request status when name is too short', async function () {
+        const signUpRequest = await request(app)
+            .post('/sign_up')
+            .send({
+                name: 'short',
+                password: 'password'
+            })
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .expect(400);
+        
+        expect(signUpRequest.body[0].errors).toEqual(
+            {
+                issues: [
+                    {
+                        code: "too_small",
+                        exact: false,
+                        inclusive: true,
+                        message: "String must contain at least 7 character(s)",
+                        minimum: 7,
+                        path: ["name"],
+                        type: "string",
+                    },
+                ],
+                name: "ZodError"
+            }
+        )
+    });
+
+    it('should return bad request status when password is too short', async function () {
+        const signUpRequest = await request(app)
+            .post('/sign_up')
+            .send({
+                name: 'username',
+                password: 'pswd'
+            })
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .expect(400);
+        
+        expect(signUpRequest.body[0].errors).toEqual(
+            {
+                issues: [
+                    {
+                        code: "too_small",
+                        exact: false,
+                        inclusive: true,
+                        message: "String must contain at least 7 character(s)",
+                        minimum: 7,
+                        path: ["password"],
+                        type: "string",
+                    },
+                ],
+                name: "ZodError"
+            }
+        )
+    });
+
+    it('should return bad request status when params are empty', async function () {
+        const signUpRequest = await request(app)
+            .post('/sign_up')
+            .send()
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .expect(400);
+        
+        expect(signUpRequest.body[0].errors).toEqual(
+            {
+                issues: [
+                    {
+                        code: "invalid_type",
+                        expected: "string",
+                        message: "Required",
+                        path: ["name"],
+                        received: "undefined"
+                    },
+                    {
+                        code: "invalid_type",
+                        expected: "string",
+                        message: "Required",
+                        path: ["password"],
+                        received: "undefined"
+                    },
+                ],
+                name: "ZodError"
+            }
+        )
     })
 
 })
