@@ -6,22 +6,31 @@ export type PresentedPieces = {
 }
 
 type PresentedRow = {
-    [x: number]: PresentedPiece
+    [x: number]: PresentedField
 }
 
-type PresentedPiece = {
-    pieceType: Pieces,
-    colour: boolean,
+type PresentedField = {
+    piece: { 
+        pieceType: Pieces,
+        colour: boolean
+    },
+    highlighted: boolean
+   
 }
 
 const piecesPresenter = (pieces: Piece[]): PresentedPieces => {
-    let presentedPieces: PresentedPieces = {}
+    const presentedPieces: PresentedPieces = {};
+
+    for (let row = 0; row < 8; row++) {
+        presentedPieces[row] = {};
+
+        for (let col = 0; col < 8; col++) {
+            presentedPieces[row][col] = {} as PresentedField;
+        }
+    }
 
     for(var piece of pieces) {
-        if(!presentedPieces[piece.y]) {
-            presentedPieces[piece.y] = {} as PresentedRow
-        }
-        presentedPieces[piece.y][piece.x] = { pieceType: piece.type, colour: piece.colour } as PresentedPiece
+        presentedPieces[piece.y][piece.x] = {highlighted: false, piece: { pieceType: piece.type, colour: piece.colour }} as PresentedField
     }
     return presentedPieces
 }
