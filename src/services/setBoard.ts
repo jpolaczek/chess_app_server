@@ -4,11 +4,11 @@ import Pieces from "../enums/pieces"
 
 async function setBoard(gameId: number) {
     console.log("creating pieces")
-    for (let i = 0; i < 8; i++) {
+    for (let i = 1; i < 9; i++) {
         console.log("about to create black piece no " + i)
         await createPiece({
             x: i,
-            y: 1,
+            y: 2,
             colour: Colours.Black,
             type: Pieces.Pawn,
             gameId: gameId
@@ -16,11 +16,11 @@ async function setBoard(gameId: number) {
     }
 
     ////white pawns
-    for (let i = 0; i < 8; i++) {
+    for (let i = 1; i < 9; i++) {
         console.log("about to create white piece no " + i)
         await createPiece({
             x: i,
-            y: 6,
+            y: 7,
             colour: Colours.White,
             type: Pieces.Pawn,
             gameId: gameId

@@ -21,10 +21,10 @@ type PresentedField = {
 const piecesPresenter = (pieces: Piece[]): PresentedPieces => {
     const presentedPieces: PresentedPieces = {};
 
-    for (let row = 0; row < 8; row++) {
+    for (let row = 1; row < 9; row++) {
         presentedPieces[row] = {};
 
-        for (let col = 0; col < 8; col++) {
+        for (let col = 1; col < 9; col++) {
             presentedPieces[row][col] = {} as PresentedField;
         }
     }
