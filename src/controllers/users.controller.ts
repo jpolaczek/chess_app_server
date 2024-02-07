@@ -2,6 +2,8 @@ import { createUser, findUserById, findUserByNameAndPassword } from "../reposito
 import { User } from '.prisma/client'
 import { Request, Response } from "express";
 import { MyResponse, SessionObject, AuthRequest } from '../api-response'
+import { setTimeout } from 'timers/promises';
+
 
 export async function signUp(req: Request<AuthRequest>, res: Response<MyResponse<User>>): Promise<Response> {
     const name: string = req.body.name;
@@ -19,6 +21,7 @@ export async function signIn(req: Request<AuthRequest>, res: Response<SessionObj
     const name: string = req.body.name;
     const password: string = req.body.password;
     let result: boolean
+
     const user = await findUserByNameAndPassword({name, password}); ///prisma used here
 
     if(!user) {

@@ -6,7 +6,8 @@ export async function createGame(params: { playerOneId: number, name: string}): 
     return await prisma.game.create({
         data: {
             playerOneId: params.playerOneId,
-            name: params.name
+            name: params.name,
+            playerOneColour: Math.random() >= 0.5
         }
     })
 }
