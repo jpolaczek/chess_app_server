@@ -24,11 +24,16 @@ model Game {
   playerTwoColour Boolean?
 }
 
+model BoardState {
+  id     Int     @id @default(autoincrement())
+  gameId Int
+}
+
 model Piece {
   id     Int     @id @default(autoincrement())
   x      Int
   y      Int
   type   Int
   colour Boolean
-  gameId Int
+  boardStateId Int
 }
