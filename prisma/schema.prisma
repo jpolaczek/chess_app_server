@@ -1,9 +1,7 @@
-
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  output        = "../node_modules/.prisma/client"
   binaryTargets = ["linux-musl", "darwin-arm64", "linux-musl-arm64-openssl-3.0.x"]
-  output = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -12,23 +10,25 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String  @map("name")
+  id       Int    @id @default(autoincrement())
+  name     String @map("name")
   password String @map("password")
 }
 
 model Game {
-  id       Int  @id @default(autoincrement())
-  playerOneId Int
-  playerTwoId Int?
-  name  String  @map("name")
+  id              Int      @id @default(autoincrement())
+  playerOneId     Int
+  playerTwoId     Int?
+  name            String   @map("name")
+  playerOneColour Boolean?
+  playerTwoColour Boolean?
 }
 
 model Piece {
-  id      Int  @id @default(autoincrement())
-  x       Int
-  y       Int
-  type    Int
-  colour  Boolean
-  gameId  Int
+  id     Int     @id @default(autoincrement())
+  x      Int
+  y      Int
+  type   Int
+  colour Boolean
+  gameId Int
 }

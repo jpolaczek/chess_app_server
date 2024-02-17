@@ -3,10 +3,14 @@ import { PrismaClient, Game } from '.prisma/client'
 const prisma = new PrismaClient()
 
 export async function createGame(params: { playerOneId: number, name: string}): Promise<Game> {
+    const playerOneColour = Math.random() >= 0.5
+
     return await prisma.game.create({
         data: {
             playerOneId: params.playerOneId,
-            name: params.name
+            name: params.name,
+            playerOneColour: playerOneColour,
+            playerTwoColour: !playerOneColour
         }
     })
 }
