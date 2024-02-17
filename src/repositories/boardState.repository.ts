@@ -9,14 +9,14 @@ export async function createBoardState(params: { gameId: number }): Promise<Boar
     })
 }
 
-export async function getLatestBoardState(params: { gameId: number}): Promise<BoardState | null> {
+export async function getLatestBoardState(params: { gameId: number }): Promise<BoardState | null> {
 
     return await prisma.boardState.findFirst({
+        where: { gameId: params.gameId },
         orderBy: [
             {
                 id: 'desc'
             }
-        ],
-        take: 1
+        ]
     })
 }
