@@ -7,23 +7,23 @@ type PieceAttributes = {
     y: number,
     colour: boolean,
     type: number,
-    gameId: number
+    boardStateId: number
 }
 
-export async function createPiece({ x, y, colour, type, gameId }: PieceAttributes): Promise<Piece> {
+export async function createPiece({ x, y, colour, type, boardStateId }: PieceAttributes): Promise<Piece> {
     return await prisma.piece.create({
         data: {
             x: x,
             y: y,
             colour: colour,
             type: type,
-            gameId: gameId
+            boardStateId: boardStateId
         }
     })
 }
 
-export async function getPieces(gameId: number): Promise<Piece[]> {
+export async function getPieces(boardStateId: number): Promise<Piece[]> {
     return await prisma.piece.findMany({
-        where: { gameId: gameId }
+        where: { boardStateId: boardStateId }
     })
 }

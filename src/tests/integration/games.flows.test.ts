@@ -50,8 +50,6 @@ describe("user signing in and creating a game", () => {
             .set("Accept", "application/json")
             .expect(200);
         const game = await prisma.game.findFirst({where: { name: gameName}})  
-        console.log(game?.playerOneColour)
-        console.log(game?.playerTwoColour)
         expect(createGameRequest.body).toEqual({
             object: {
                 id: game?.id,

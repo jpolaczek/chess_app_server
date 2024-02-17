@@ -47,6 +47,7 @@ export async function signOut(req: Request, res: Response<SessionObject>): Promi
 
 export async function getSessionData(req: Request, res: Response<SessionObject>): Promise<Response> {
     let result: boolean;
+    console.log(req.session)
     const id = Number(req.session.userId)
     let user: User | null = null
 
