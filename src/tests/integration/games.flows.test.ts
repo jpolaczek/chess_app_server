@@ -1,12 +1,12 @@
 import { PrismaClient } from '.prisma/client'
 import SetUpApplication from "../../SetUpApplication";
-import { before } from 'node:test';
 
 const express = require('express');
-const request = require('supertest')
-var login = require('./login');
+const supertestSession = require('supertest-session')
 
 const app = SetUpApplication(express())
+const sessionApp = supertestSession(app)
+
 const prisma = new PrismaClient
 
 beforeEach(async () => {
@@ -25,14 +25,14 @@ afterEach(async () => {
     ]);
 });
 
-describe("nuser signing in and creating a game", () => {
-    it("should just do the stuff, whateva", async function () {
+describe("user signing in and creating a game", () => {
+    it("should set user session and create game record", async function () {
         const password = 'password'
-        const name = 'usernname'
+        const name = 'username'
 
         await prisma.user.create({data: {name: name, password: password}})
 
-        const req = await request(app)
+        const res = await sessionApp
             .post("/sign_in")
             .send({
                 name: name,
@@ -43,14 +43,15 @@ describe("nuser signing in and creating a game", () => {
             .expect(200);
         const gameName = "gameName"
         
-        const createGameRequest = await request(app)
+        const createGameRequest = await sessionApp
             .post("/games/create")
             .send({name: gameName})
             .set("Content-Type", "application/json")
             .set("Accept", "application/json")
             .expect(200);
         const game = await prisma.game.findFirst({where: { name: gameName}})  
-
+        console.log(game?.playerOneColour)
+        console.log(game?.playerTwoColour)
         expect(createGameRequest.body).toEqual({
             object: {
                 id: game?.id,
