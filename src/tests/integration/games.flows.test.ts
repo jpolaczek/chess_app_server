@@ -52,6 +52,7 @@ describe("user signing in and creating a game", () => {
             .set("Accept", "application/json")
             .expect(200);
         const game = await prisma.game.findFirst({ where: { name: gameName } })
+
         expect(createGameRequest.body).toEqual({
             object: {
                 id: game?.id,
@@ -78,12 +79,17 @@ describe("user signing in and creating a game", () => {
             where: { gameId: game?.id },
             orderBy: { id: 'desc' }
         })
-        expect(makeMoveRequest.body.objects).toContain({
-            x: 1,
-            y: 3,
-            boardStateId: newBoardState?.id,
-            colour: true,
-            type: 0
-        })
-    });
+        console.log(makeMoveRequest.body.object)
+        expect(makeMoveRequest.body.object).toEqual(
+            expect.arrayContaining([     
+                expect.objectContaining({
+                    x: 1,
+                    y: 3,
+                    boardStateId: newBoardState?.id,
+                    colour: true,
+                    type: 0          
+                })
+            ])
+        )
+        });
 });
